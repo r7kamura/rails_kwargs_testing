@@ -24,26 +24,63 @@ gem install rails_kwargs_testing
 
 ## Usage
 
-### For ActionController::TestCase
+### For ActionController::TestCase with Minitest
 
 ```ruby
-RSpec.configuration.prepend RailsKwargsTesting::ControllerMethods, type: :controller
+class ArticlesControllerTest < ::ActionController::TestCase
+  prepend ::RailsKwargsTesting::ControllerMethods
+
+  def test_create
+    post :create, params: { name: "Hello, World!" }
+    assert_equal 200, response.status
+  end
+end
 ```
 
+### For ActionController::TestCase with RSpec
+
 ```ruby
-# `post :create, name: "My Widget"` in Rails 4
-post :create, params: { name: "My Widget" }
+RSpec.describe ArticlesController do
+  prepend RailsKwargsTesting::ControllerMethods
+
+  describe "#create" do
+    subject do
+      # `post :create, name: "Hello, World!"` in Rails 4
+      post :create, params: { name: "Hello, World!" }
+    end
+
+    it { is_expected.to eq 200 }
+  end
+end
 ```
 
-### For ActionDispatch::Integration
+### For ActionDispatch::IntegrationTest with Minitest
 
 ```ruby
-RSpec.configuration.prepend RailsKwargsTesting::RequestMethods, type: :request
+class CreateArticleTest < ActionDispatch::IntegrationTest
+  prepend ::RailsKwargsTesting::RequestMethods
+
+  def test_create_article
+    # `post "/articles", name: "Hello, World!"` in Rails 4
+    post "/articles", params: { name: "Hello, World!" }
+    assert_equal 200, response.status
+  end
+end
 ```
 
+### For ActionDispatch::IntegrationTest with RSpec
+
 ```ruby
-# `post "/widgets", name: "My Widget"` in Rails 4
-post "/widgets", params: { name: "My Widget" }
+RSpec.describe "POST /articles" do
+  prepend RailsKwargsTesting::RequestMethods
+
+  subject do
+    # `post "/articles", name: "Hello, World!"` in Rails 4
+    post "/articles", params: { name: "Hello, World!" }
+  end
+
+  it { is_expected.to eq 200 }
+end
 ```
 
 ## Contributing
