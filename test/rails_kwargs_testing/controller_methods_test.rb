@@ -15,7 +15,7 @@ class ControllerMethodsTest < ActionController::TestCase
 
   def test_format
     post :create, format: :json
-    assert_equal "application/json", decoded_body["format"]
+    assert_equal "json", decoded_body["path_parameters"]["format"]
   end
 
   def test_params

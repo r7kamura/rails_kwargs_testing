@@ -24,7 +24,7 @@ class ArticlesController < ActionController::Base
     render(
       json: {
         flash: flash.to_hash,
-        format: request.format.to_s,
+        path_parameters: request.path_parameters,
         request_parameters: request.request_parameters,
         scheme: request.scheme,
         session: session.to_hash,
