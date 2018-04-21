@@ -1,5 +1,8 @@
 # RailsKwargsTesting
 
+[![Gem](https://img.shields.io/gem/v/rails_kwargs_testing.svg)](https://rubygems.org/gems/rails_kwargs_testing)
+[![Build Status](https://travis-ci.org/r7kamura/rails_kwargs_testing.png)](https://travis-ci.org/r7kamura/rails_kwargs_testing)
+
 Provides Rails 5 compatible testing methods for gradual migration from Rails 4 to 5.
 
 ## Installation
