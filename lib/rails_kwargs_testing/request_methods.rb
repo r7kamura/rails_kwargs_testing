@@ -8,7 +8,6 @@ module RailsKwargsTesting
       post
       put
       get_via_redirect
-      head_via_redirect
       patch_via_redirect
       post_via_redirect
       put_via_redirect
