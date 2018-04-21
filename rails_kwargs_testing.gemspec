@@ -8,9 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = RailsKwargsTesting::VERSION
   spec.authors       = ["r7kamura"]
   spec.email         = ["r7kamura@gmail.com"]
-
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = "Provides Rails 5 compatible testing methods for gradual migration from Rails 4 to 5."
   spec.homepage      = "https://github.com/r7kamura/rails_kwargs_testing"
   spec.license       = "MIT"
 
