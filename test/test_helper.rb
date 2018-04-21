@@ -13,19 +13,24 @@ class TestApp < Rails::Application
   ::Rails.logger = ::Logger.new(nil)
 
   routes.draw do
-    post "/articles" => "articles#create"
+    delete "/" => "test#index"
+    get "/" => "test#index"
+    patch "/" => "test#index"
+    post "/" => "test#index"
+    put "/" => "test#index"
   end
 end
 
-class ArticlesController < ActionController::Base
+class TestController < ActionController::Base
   include ::Rails.application.routes.url_helpers
 
-  def create
+  def index
     render(
       json: {
         flash: flash.to_hash,
-        path_parameters: request.path_parameters,
-        request_parameters: request.request_parameters,
+        format: request.format.to_s,
+        is_xhr: request.xhr?,
+        params: params.to_hash,
         scheme: request.scheme,
         session: session.to_hash,
       }
