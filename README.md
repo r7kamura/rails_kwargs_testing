@@ -22,9 +22,9 @@ Or install it yourself as:
 gem install rails_kwargs_testing
 ```
 
-## Usage
+## Minitest
 
-### For ActionController::TestCase with Minitest
+### ActionController::TestCase
 
 ```ruby
 class ArticlesControllerTest < ::ActionController::TestCase
@@ -37,7 +37,23 @@ class ArticlesControllerTest < ::ActionController::TestCase
 end
 ```
 
-### For ActionController::TestCase with RSpec
+### ActionDispatch::IntegrationTest
+
+```ruby
+class CreateArticleTest < ActionDispatch::IntegrationTest
+  prepend ::RailsKwargsTesting::RequestMethods
+
+  def test_create_article
+    # `post "/articles", name: "Hello, World!"` in Rails 4
+    post "/articles", params: { name: "Hello, World!" }
+    assert_equal 200, response.status
+  end
+end
+```
+
+## RSpec
+
+### Controller-specs
 
 ```ruby
 RSpec.describe ArticlesController do
@@ -54,21 +70,7 @@ RSpec.describe ArticlesController do
 end
 ```
 
-### For ActionDispatch::IntegrationTest with Minitest
-
-```ruby
-class CreateArticleTest < ActionDispatch::IntegrationTest
-  prepend ::RailsKwargsTesting::RequestMethods
-
-  def test_create_article
-    # `post "/articles", name: "Hello, World!"` in Rails 4
-    post "/articles", params: { name: "Hello, World!" }
-    assert_equal 200, response.status
-  end
-end
-```
-
-### For ActionDispatch::IntegrationTest with RSpec
+### Request-specs
 
 ```ruby
 RSpec.describe "POST /articles" do
