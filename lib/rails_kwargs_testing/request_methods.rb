@@ -1,5 +1,5 @@
 module RailsKwargsTesting
-  module RequestSpecHelper
+  module RequestMethods
     %i[
       delete
       get

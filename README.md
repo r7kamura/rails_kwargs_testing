@@ -24,10 +24,10 @@ gem install rails_kwargs_testing
 
 ## Usage
 
-### Controller-specs
+### For ActionController::TestCase
 
 ```ruby
-RSpec.configuration.prepend RailsKwargsTesting::ControllerSpecHelper, type: :controller
+RSpec.configuration.prepend RailsKwargsTesting::ControllerMethods, type: :controller
 ```
 
 ```ruby
@@ -35,10 +35,10 @@ RSpec.configuration.prepend RailsKwargsTesting::ControllerSpecHelper, type: :con
 post :create, params: { name: "My Widget" }
 ```
 
-### Request-specs
+### For ActionDispatch::Integration
 
 ```ruby
-RSpec.configuration.prepend RailsKwargsTesting::SpecSpecHelper, type: :request
+RSpec.configuration.prepend RailsKwargsTesting::RequestMethods, type: :request
 ```
 
 ```ruby

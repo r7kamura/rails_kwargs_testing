@@ -1,5 +1,5 @@
 module RailsKwargsTesting
-  module ControllerSpecHelper
+  module ControllerMethods
     %i[
       delete
       get
