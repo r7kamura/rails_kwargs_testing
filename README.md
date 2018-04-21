@@ -24,14 +24,26 @@ gem install rails_kwargs_testing
 
 ## Usage
 
-For example with RSpec:
+### Controller-specs
 
 ```ruby
-# spec/rails_helper.rb
-RSpec.configure do |config|
-  config.prepend RailsKwargsTesting::ControllerSpecHelper, type: :controller
-  config.prepend RailsKwargsTesting::RequestSpecHelper, type: :request
-end
+RSpec.configuration.prepend RailsKwargsTesting::ControllerSpecHelper, type: :controller
+```
+
+```ruby
+# `post :create, name: "My Widget"` in Rails 4
+post :create, params: { name: "My Widget" }
+```
+
+### Request-specs
+
+```ruby
+RSpec.configuration.prepend RailsKwargsTesting::SpecSpecHelper, type: :request
+```
+
+```ruby
+# `post "/widgets", name: "My Widget"` in Rails 4
+post "/widgets", params: { name: "My Widget" }
 ```
 
 ## Contributing
