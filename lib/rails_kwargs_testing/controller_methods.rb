@@ -8,11 +8,11 @@ module RailsKwargsTesting
       post
       put
     ].each do |method_name|
-      define_method(method_name) do |path, flash: nil, format: nil, params: nil, session: nil|
+      define_method(method_name) do |action, flash: nil, format: nil, params: nil, session: nil|
         if format
           params = (params || {}).merge(format: format)
         end
-        super(path, params, session, flash)
+        super(action, params, session, flash)
       end
     end
 
