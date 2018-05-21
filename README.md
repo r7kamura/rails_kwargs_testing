@@ -34,6 +34,7 @@ class ArticlesControllerTest < ::ActionController::TestCase
   prepend ::RailsKwargsTesting::ControllerMethods
 
   def test_create
+    # `post :create, name: "Hello, World!"` in Rails 4
     post :create, params: { name: "Hello, World!" }
     assert_equal 200, response.status
   end
