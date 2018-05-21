@@ -25,9 +25,16 @@ Or install it yourself as:
 gem install rails_kwargs_testing
 ```
 
-## Minitest
+## For controller tests
 
-### ActionController::TestCase
+Prepend RailsKwargsTesting::ControllerMethods. Supported options are:
+
+- :flash
+- :format
+- :params
+- :session
+
+### Minitest
 
 ```ruby
 class ArticlesControllerTest < ::ActionController::TestCase
@@ -41,23 +48,7 @@ class ArticlesControllerTest < ::ActionController::TestCase
 end
 ```
 
-### ActionDispatch::IntegrationTest
-
-```ruby
-class CreateArticleTest < ActionDispatch::IntegrationTest
-  prepend ::RailsKwargsTesting::RequestMethods
-
-  def test_create_article
-    # `post "/articles", name: "Hello, World!"` in Rails 4
-    post "/articles", params: { name: "Hello, World!" }
-    assert_equal 200, response.status
-  end
-end
-```
-
-## RSpec
-
-### Controller-specs
+### RSpec
 
 ```ruby
 RSpec.describe ArticlesController do
@@ -74,7 +65,29 @@ RSpec.describe ArticlesController do
 end
 ```
 
-### Request-specs
+## For request tests
+
+Prepend RailsKwargsTesting::RequestMethods. Supported options are:
+
+- :env
+- :headers
+- :params
+
+### Minitest
+
+```ruby
+class CreateArticleTest < ActionDispatch::IntegrationTest
+  prepend ::RailsKwargsTesting::RequestMethods
+
+  def test_create_article
+    # `post "/articles", name: "Hello, World!"` in Rails 4
+    post "/articles", params: { name: "Hello, World!" }
+    assert_equal 200, response.status
+  end
+end
+```
+
+### RSpec
 
 ```ruby
 RSpec.describe "POST /articles" do
