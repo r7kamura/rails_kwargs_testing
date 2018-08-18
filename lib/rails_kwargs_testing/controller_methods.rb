@@ -8,11 +8,18 @@ module RailsKwargsTesting
       post
       put
     ].each do |method_name|
-      define_method(method_name) do |action, flash: nil, format: nil, params: nil, session: nil|
+      define_method(method_name) do |action, flash: nil, format: nil, params: nil, session: nil, xhr: nil|
         if format
           params = (params || {}).merge(format: format)
         end
-        super(action, params, session, flash)
+        if xhr
+          insert_xhr_headers
+        end
+        super(action, params, session, flash).tap do
+          if xhr
+            reset_xhr_headers
+          end
+        end
       end
     end
 
@@ -21,13 +28,23 @@ module RailsKwargsTesting
       xml_http_request
     ].each do |method_name|
       define_method(method_name) do |request_method, action, flash: nil, format: nil, params: nil, session: nil|
-        @request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
-        @request.env['HTTP_ACCEPT'] ||=  [Mime::JS, Mime::HTML, Mime::XML, 'text/xml', Mime::ALL].join(', ')
+        insert_xhr_headers
         __send__(request_method, action, flash: flash, format: format, params: params, session: session).tap do
-          @request.env.delete 'HTTP_X_REQUESTED_WITH'
-          @request.env.delete 'HTTP_ACCEPT'
+          reset_xhr_headers
         end
       end
+    end
+
+    private
+
+    def insert_xhr_headers
+      @request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+      @request.env['HTTP_ACCEPT'] ||=  [Mime::JS, Mime::HTML, Mime::XML, 'text/xml', Mime::ALL].join(', ')
+    end
+
+    def reset_xhr_headers
+      @request.env.delete 'HTTP_X_REQUESTED_WITH'
+      @request.env.delete 'HTTP_ACCEPT'
     end
   end
 end

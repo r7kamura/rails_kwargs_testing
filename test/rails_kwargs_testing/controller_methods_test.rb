@@ -28,6 +28,11 @@ class ControllerMethodsTest < ActionController::TestCase
     assert_equal 1, decoded_body["session"]["a"]
   end
 
+  def test_keyword_xhr
+    post :index, xhr: true
+    assert decoded_body["is_xhr"]
+  end
+
   def test_method_delete
     delete :index, params: { a: 1 }
     assert_equal "1", decoded_body["params"]["a"]
