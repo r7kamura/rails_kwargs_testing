@@ -39,7 +39,13 @@ module RailsKwargsTesting
 
     def insert_xhr_headers
       @request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
-      @request.env['HTTP_ACCEPT'] ||=  [Mime::JS, Mime::HTML, Mime::XML, 'text/xml', Mime::ALL].join(', ')
+      @request.env['HTTP_ACCEPT'] ||= [
+        ::Mime::JS,
+        ::Mime::HTML,
+        ::Mime::XML,
+        'text/xml',
+        ::Mime::ALL,
+      ].join(', ')
     end
 
     def reset_xhr_headers
