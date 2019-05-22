@@ -18,6 +18,11 @@ class ControllerMethodsTest < ActionController::TestCase
     assert_equal "application/json", decoded_body["format"]
   end
 
+  def test_keyword_as
+    post :index, as: :json
+    assert_equal "application/json", decoded_body["format"]
+  end
+
   def test_keyword_params
     post :index, params: { a: 1 }
     assert_equal "1", decoded_body["params"]["a"]

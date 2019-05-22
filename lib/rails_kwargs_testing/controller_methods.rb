@@ -8,7 +8,11 @@ module RailsKwargsTesting
       post
       put
     ].each do |method_name|
-      define_method(method_name) do |action, flash: nil, format: nil, params: nil, session: nil, xhr: nil|
+      define_method(method_name) do |action, flash: nil, format: nil, params: nil, session: nil, xhr: nil, as: nil|
+        if as
+          format ||= as
+        end
+
         if format
           params = (params || {}).merge(format: format)
         end
@@ -27,7 +31,7 @@ module RailsKwargsTesting
       xhr
       xml_http_request
     ].each do |method_name|
-      define_method(method_name) do |request_method, action, flash: nil, format: nil, params: nil, session: nil|
+      define_method(method_name) do |request_method, action, flash: nil, format: nil, params: nil, session: nil, as: nil|
         insert_xhr_headers
         __send__(request_method, action, flash: flash, format: format, params: params, session: session).tap do
           reset_xhr_headers

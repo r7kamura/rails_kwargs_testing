@@ -34,6 +34,7 @@ Prepend RailsKwargsTesting::ControllerMethods. Supported options are:
 - :params
 - :session
 - :xhr
+- :as
 
 ### Minitest
 
