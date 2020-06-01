@@ -3,6 +3,11 @@ require "test_helper"
 class RequestMethodsTest < ActionDispatch::IntegrationTest
   prepend ::RailsKwargsTesting::RequestMethods
 
+  def test_keyword_as
+    post "/", as: :json
+    assert_equal "application/json", decoded_body["format"]
+  end
+
   def test_keyword_env
     post "/", env: { "rack.url_scheme" => "https" }
     assert_equal "https", decoded_body["scheme"]

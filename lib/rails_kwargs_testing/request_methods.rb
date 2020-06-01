@@ -12,7 +12,10 @@ module RailsKwargsTesting
       post_via_redirect
       put_via_redirect
     ].each do |method_name|
-      define_method(method_name) do |path, env: {}, headers: {}, params: nil|
+      define_method(method_name) do |path, env: {}, headers: {}, params: nil, as: nil|
+        if as
+          params = (params || {}).merge(format: as)
+        end
         super(path, params, env.merge(headers))
       end
     end
